@@ -1,0 +1,28 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "pdt-dev"
+version = "0.1.0"
+description = "Process Deploy Tool: Git-native runtime for state-bounded operational AI workflows."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+keywords = ["dev-tools", "infrastructure", "ai-agents", "workflow-automation", "cli"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+]
+dependencies = [
+    "click>=8.0.0",  # Clean framework for building beautiful terminal CLIs
+]
+
+[project.scripts]
+pdt = "pdt_cli.main:cli"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/pdt_cli"]

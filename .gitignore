@@ -216,3 +216,9 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+.planning/
+
+# PDT runtime and test files
+.pdt/
+test_workspace/
+mock_llm.py

@@ -76,7 +76,7 @@ Review the assessment and request final business approval before closing.
 
 Install the PDT package:
 ```bash
-pip install run-dbt
+pip install run-pdt
 ```
 
 ### 1. `pdt init`

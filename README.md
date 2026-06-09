@@ -2,7 +2,7 @@
 
 > **Git-native runtime for state-bounded operational AI workflows.**
 
-`pdt-dev` is a developer-focused Command Line Interface (CLI) and runtime engine designed to govern, parse, lint, and execute standard-conforming **`PROCESS.md`** files. 
+`pdt` is a developer-focused Command Line Interface (CLI) and runtime engine designed to govern, parse, lint, and execute standard-conforming **`PROCESS.md`** files. 
 
 Inspired by analytics engineering tools like `dbt`, `pdt` decouples general-purpose LLM capabilities (**skills**) from operational business logic and policies (**processes**). It provides deterministic execution boundaries, step-by-step state preservation, and human-in-the-loop (HITL) gates.
 
@@ -76,7 +76,7 @@ Review the assessment and request final business approval before closing.
 
 Install the PDT package:
 ```bash
-pip install pdt-dev
+pip install run-dbt
 ```
 
 ### 1. `pdt init`

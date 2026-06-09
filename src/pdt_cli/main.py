@@ -233,7 +233,7 @@ RUN find /app/tools -name "requirements.txt" -exec pip install -r {} \\;
 RUN find /app/tools -name "package.json" -exec sh -c 'cd $(dirname {}) && npm install' \\;
 
 # 5. PDT Runtime Installation
-RUN pip install pdt-dev
+RUN pip install run-dbt
 
 # 6. Expose HTTP API Port for process triggers
 EXPOSE 8080

@@ -381,11 +381,11 @@ Workflow engineering solves this by making the execution cost a function of the 
 
 To make development and deployment robust, the runtime provides a command-line interface (CLI) to validate and execute workflows.
 
-#### 1. Linting (`pdt process lint`)
+#### 1. Linting (`pdt lint`)
 Before a process is deployed or merged into the repository, the linter checks the document's structure.
 
 ```bash
-pdt process lint processes/growth_experiment_review/PROCESS.md
+pdt lint processes/growth_experiment_review/PROCESS.md
 ```
 
 The linter verifies that:
@@ -394,36 +394,32 @@ The linter verifies that:
 *   The workflow contains at least one step.
 *   All inline references (e.g., `tool/experiment_lookup`) resolve to valid files in the repository.
 
-#### 2. Parsing (`pdt process parse`)
+#### 2. Parsing (`pdt parse`)
 The parsing command reads the Markdown file and outputs the structured execution plan. This is useful for debugging how the runtime will split steps and inject context.
 
 ```bash
-pdt process parse processes/growth_experiment_review/PROCESS.md
+pdt parse processes/growth_experiment_review/PROCESS.md
 ```
 
-#### 3. Execution (`pdt process run`)
+#### 3. Execution (`pdt run`)
 To run a workflow, the runtime is invoked with the target process file and the initial input payload.
 
 ```bash
-pdt process run processes/growth_experiment_review/PROCESS.md \
+pdt run processes/growth_experiment_review/PROCESS.md \
   --input inputs/weekly_metrics.json
 ```
 
 During execution, the CLI prints a clean, state-driven log of the process run:
 
 ```text
-Process: Growth Experiment Review v0.1.0
-Owner: growth-ops
-Steps: 4
-Run ID: run_98a72f1c
-
+Starting execution of 'Growth Experiment Review' (Run ID: run_98a72f1c)...
 Step 1: Load active experiments ... completed
 Step 2: Assess statistical performance ... completed
 Step 3: Compile recommendations ... completed
 Step 4: Route for approval ... waiting_for_approval
 
-Outcome: approval_request_created
-Artifacts saved to .pdt/runs/run_98a72f1c/
+Outcome: paused waiting for approval.
+To approve, run: pdt run --resume run_98a72f1c
 ```
 
 Inside the run directory, the runtime preserves the complete execution trace:

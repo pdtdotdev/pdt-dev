@@ -222,3 +222,4 @@ __marimo__/
 .pdt/
 test_workspace/
 mock_llm.py
+scratch/pdt_dev_deprecation/

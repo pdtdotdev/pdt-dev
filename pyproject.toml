@@ -3,11 +3,11 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "pdt-dev"
+name = "run-dbt"
 version = "0.1.0"
 description = "Process Deploy Tool: Git-native runtime for state-bounded operational AI workflows."
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 license = { text = "MIT" }
 keywords = ["dev-tools", "infrastructure", "ai-agents", "workflow-automation", "cli"]
 classifiers = [

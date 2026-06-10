@@ -1,22 +1,44 @@
 # PDT (Process Deploy Tool)
 
-> **Git-native runtime for state-bounded operational AI workflows.**
+> **Git-native tooling for governed, AI-assisted operational workflows.**
 
-`pdt` is a developer-focused Command Line Interface (CLI) and runtime engine designed to govern, parse, lint, and execute standard-conforming **`PROCESS.md`** files. 
+`pdt` (Process Deploy Tool) is an open-source command-line tool that lets operators, analysts, and engineers turn recurring business processes into structured, version-controlled workflows using Markdown.
 
-Inspired by analytics engineering tools like `dbt`, `pdt` decouples general-purpose LLM capabilities (**skills**) from operational business logic and policies (**processes**). It provides deterministic execution boundaries, step-by-step state preservation, and human-in-the-loop (HITL) gates.
+At its core, it sits in the execution layer for AI-assisted operations: once a process is described in a `PROCESS.md` file, `pdt` can validate it, resolve its dependencies, run it step by step, preserve evidence, and pause for human approval when needed.
 
 ---
 
-## Core Philosophy: Workflow Engineering
+## What it does
+
+- Lets you write operational workflows as structured **Markdown SOPs** (`PROCESS.md` files), then checks and runs them from the command line
+- Introduces **processes**: ordered, versioned business workflows with owners, descriptions, and explicit steps
+- Separates **skills** from **processes**: skills describe reusable capabilities, while processes define the business rules, sequence, constraints, and approval points
+- Resolves inline references to local **tools**, **schemas**, **skills**, and other processes
+- Runs workflows one step at a time, preserving inputs, outputs, tool calls, logs, and evidence for each step
+- Supports human-in-the-loop gates for approvals, exceptions, and business judgment
+- Provides `lint`, `parse`, `run`, and `deploy` commands so workflows can be reviewed, tested, and shipped through Git
+- Exposes a FastAPI server for triggering workflows through webhooks or remote API calls
+
+## The philosophy
 
 Most operational teams do not need another open-ended autonomous agent. They require a reliable framework to transform recurring, high-stakes business processes into structured, version-controlled workflows. 
 
 PDT establishes this via **Workflow Engineering**—pairing deterministic execution structures with bounded model reasoning:
 * **Decoupled Skills & Processes**: Skills describe *how* to perform a reusable task (general/mechanical); processes describe *what* should happen, in what order, and under what constraints (contextual/governing).
 * **Markdown as Code**: `PROCESS.md` files are the "SQL of operations"—readable by non-developer process owners, versioned in Git, and executable by a computer.
-* **Deterministic Bounding**: Instead of letting an LLM navigate a workflow in an open-ended loop (resulting in unpredictable execution costs and loops), the PDT runtime runs one isolated step at a time, enforcing boundaries and security.
-* **Human-Centered Exceptions**: When exceptions or gates are hit, the runtime halts, saves state, and alerts humans to verify or approve the execution.
+* **Step-by-Step Execution**: Instead of letting an LLM navigate a workflow in an open-ended loop, PDT runs one isolated step at a time and exposes only the context and tools needed for that step.
+* **Human-Centered Exceptions**: When exceptions or gates are hit, PDT pauses, saves state, and alerts humans to verify or approve the work.
+
+## What it connects to
+
+PDT works with local scripts, APIs, data contracts, and LLM-assisted capabilities through a workspace layout:
+
+- **Tools** wrap executable code such as Python or Node.js scripts.
+- **Schemas** define expected structured outputs and validation contracts.
+- **Skills** provide reusable guidance for LLM-assisted work.
+- **Processes** compose those assets into governed business workflows.
+
+A simple mental model: *PDT is like dbt, but for operational workflows instead of warehouse transformations. It gives structure, conventions, validation, lineage, and deployable execution to work that used to live in ad hoc prompts, SOP docs, spreadsheets, and automation builders.*
 
 ---
 
@@ -54,7 +76,6 @@ name: Growth Experiment Review
 version: 0.1.0
 owner: growth-team
 status: active
-runtime: pdt.process.v0
 ---
 # Description
 A workflow to review growth experiments, aggregate conversions, and perform high-level evaluation before approval.
@@ -123,7 +144,7 @@ pdt deploy --target docker --dry-run
 
 ## Webhook Server Daemon
 
-Deploy the workspace as a serverless runtime using the built-in FastAPI daemon:
+Expose the workspace as an API service using the built-in FastAPI daemon:
 ```bash
 uvicorn pdt_cli.server:app --port 8080
 ```

@@ -1,10 +1,10 @@
-# Workflow Engineering: The Operating System for AI-Driven Operations
+# Workflow Engineering: Governed AI for Business Operations
 
 ## Table of Contents
 1. [Chapter 1: The Transition to Workflow Engineering](#chapter-1-the-transition-to-workflow-engineering)
 2. [Chapter 2: The Core Distinction: Processes vs. Skills](#chapter-2-the-core-distinction-processes-vs-skills)
 3. [Chapter 3: Executable SOPs: The PROCESS.md Specification](#chapter-3-executable-sops-the-processmd-specification)
-4. [Chapter 4: The Runtime as the Control Layer](#chapter-4-the-runtime-as-the-control-layer)
+4. [Chapter 4: How PDT Runs Governed Workflows](#chapter-4-how-pdt-runs-governed-workflows)
 
 ---
 
@@ -12,9 +12,9 @@
 
 In the integration of artificial intelligence into business operations, we have passed an important milestone. The primary question is no longer whether large language models (LLMs) can perform useful operational tasks. They can. In organizations worldwide, models are routinely used to summarize documents, draft customer responses, classify incidents, analyze financial variances, and query databases. 
 
-The bottleneck has shifted. The challenge is no longer one of *capability*, but one of *governance and control*. 
+The challenge is no longer one of *capability*, but one of *governance and control*, shifting the bottleneck to operational efficiency. 
 
-Most operational teams do not need another impressive demo of an open-ended agent. What they require is a reliable framework to transform recurring, high-stakes business processes into structured, version-controlled workflows. These workflows must be readable by business owners, reviewable by developers, testable in CI/CD pipelines, and executed by a runtime that enforces safety and compliance boundaries. 
+Most operational teams do not need another impressive demo of an open-ended agent. What they require is a reliable framework to transform recurring, high-stakes business processes into structured, version-controlled workflows. These workflows must be readable by business owners, reviewable by developers, testable in CI/CD pipelines, and run by software that enforces safety and compliance boundaries.
 
 This is the discipline of **Workflow Engineering**.
 
@@ -45,7 +45,7 @@ Workflow engineering applies this exact philosophy to business operations.
 
 In this new paradigm, **Markdown** becomes the SQL of operational workflows. A process owner—whether in finance, product ops, growth, or compliance—can define the steps of a business process in a structured Markdown document (`PROCESS.md`). This document is plain text, readable by anyone, and simple to edit. 
 
-Yet, when placed inside a dedicated runtime, this Markdown document becomes an executable specification. A specialized practitioner—the Workflow Engineer—can bind the steps to code-based tools, write tests, define data schemas, and track execution states. The business maintains clear visibility of the logic, while the engineering team maintains governance over the infrastructure, security, and tooling.
+Yet, when read by PDT, this Markdown document becomes an executable specification. A specialized practitioner—the Workflow Engineer—can bind the steps to code-based tools, write tests, define data schemas, and track execution states. The business maintains clear visibility of the logic, while the engineering team maintains governance over the infrastructure, security, and tooling.
 
 ```
 +-------------------------------------------------------------+
@@ -63,7 +63,7 @@ Yet, when placed inside a dedicated runtime, this Markdown document becomes an e
                                |
                                v (Deployment)
 +------------------------------+------------------------------+
-|               PDT RUNTIME (Process Deploy Tool)             |
+|                 PDT (Process Deploy Tool)                   |
 |  Executes step-by-step, enforces boundaries, saves state    |
 +-------------------------------------------------------------+
 ```
@@ -86,19 +86,19 @@ The delineation of roles in Workflow Engineering mirrors the evolution of the da
 
 *   **Business Analyst / Operator (analogous to the Data Analyst):** Identifies the process needs, runs existing workflows, and reviews outputs.
 *   **Workflow Engineer (analogous to the Analytics Engineer):** Writes and maintains the executable `PROCESS.md` SOPs, generates single-purpose tool scripts using LLMs, integrates APIs, and deploys workflows through Git.
-*   **Software / Infrastructure Engineer (analogous to the Data Engineer):** Builds the core execution environments, manages system credentials, maintains production databases, and handles the deployment of the PDT runtime.
+*   **Software / Infrastructure Engineer (analogous to the Data Engineer):** Builds the core execution environments, manages system credentials, maintains production databases, and handles PDT deployments.
 
 In small organizations, a single person may wear all three hats, moving fluidly from process definition to tool writing and system maintenance. However, in large enterprises, the lines of delineation become bright and clear. The Workflow Engineer becomes the central hub, translating business needs into versioned, auditable execution.
 
 ### Models and Compute as the Modern Warehouse
 
-The secondary driver of Analytics Engineering was the cloud data warehouse, which centralized and scaled computation. Similarly, large language models and managed runtimes serve as the centralized execution layer for operations. 
+The secondary driver of Analytics Engineering was the cloud data warehouse, which centralized and scaled computation. Similarly, large language models and managed AI services provide the computation layer for operations.
 
-Many workflows that previously required endless manual handoffs can now be compressed. This does not mean human judgment is removed; rather, the preparation, classification, extraction, and comparison steps are handled by the runtime, leaving humans to focus on validation, exception handling, and strategic decisions.
+Many workflows that previously required endless manual handoffs can now be compressed. This does not mean human judgment is removed; rather, PDT handles the preparation, classification, extraction, and comparison steps, leaving humans to focus on validation, exception handling, and strategic decisions.
 
-* A **Finance Director** no longer needs to manually extract data and assemble spreadsheet cuts to review budget variances. The runtime prepares the analysis, gathers the supporting ledger details, and drafts explanations, allowing the director to focus strictly on validating the narrative and routing anomalies.
-* A **Product Ops Lead** no longer needs to manually aggregate beta feedback, verify feature flag configurations across environments, and coordinate support training sign-offs. The runtime compiles user insights, validates release docs alignment, and prepares launch-readiness evidence for final approval.
-* A **Growth Manager** no longer needs to run manual SQL queries and compile funnel reports to assess experiments. The runtime structures the data, checks cohort sizes against statistical thresholds, and generates structured next-step recommendations for review.
+* A **Finance Director** no longer needs to manually extract data and assemble spreadsheet cuts to review budget variances. PDT prepares the analysis, gathers the supporting ledger details, and drafts explanations, allowing the director to focus strictly on validating the narrative and routing anomalies.
+* A **Product Ops Lead** no longer needs to manually aggregate beta feedback, verify feature flag configurations across environments, and coordinate support training sign-offs. PDT compiles user insights, validates release docs alignment, and prepares launch-readiness evidence for final approval.
+* A **Growth Manager** no longer needs to run manual SQL queries and compile funnel reports to assess experiments. PDT structures the data, checks cohort sizes against statistical thresholds, and generates structured next-step recommendations for review.
 
 Operational leverage is achieved not by granting agents unchecked autonomy, but by compressing the mechanics of workflows while maintaining strict, structured human oversight.
 
@@ -165,7 +165,7 @@ Operational environments are dynamic; data will be missing, schemas will drift, 
 
 Instead, a well-engineered workflow is designed to automate the standard, expected cases, while systematically routing exceptions to humans. 
 
-When an exception occurs—such as a budget variance exceeding a specific threshold without an attached explanation—the runtime halts execution, packages the current state and evidence, and alerts the process owner. The human operator reviews the case, resolves the exception, and decides whether the workflow needs to adapt.
+When an exception occurs—such as a budget variance exceeding a specific threshold without an attached explanation—PDT pauses execution, packages the current state and evidence, and alerts the process owner. The human operator reviews the case, resolves the exception, and decides whether the workflow needs to adapt.
 
 This creates a continuous feedback loop:
 
@@ -221,7 +221,7 @@ PROCESS.md
 ```
 
 ### 1. YAML Frontmatter
-The frontmatter must be at the very top of the file, enclosed by triple hyphens (`---`). It contains the structural metadata required by the runtime.
+The frontmatter must be at the very top of the file, enclosed by triple hyphens (`---`). It contains the structural metadata PDT needs to identify and run the process.
 
 ```yaml
 ---
@@ -230,20 +230,18 @@ name: Growth Experiment Review
 version: 0.1.0
 owner: growth-ops
 status: active
-runtime: pdt.process.v0
 ---
 ```
 
-*   `id`: A stable, lowercase, snake_case identifier used by the runtime and tools.
+*   `id`: A stable, lowercase, snake_case identifier used by PDT and referenced tools.
 *   `name`: The human-readable title of the process.
 *   `version`: A semantic version string (`Major.Minor.Patch`).
 *   `owner`: The functional team responsible for the process logic and exceptions.
-*   `runtime`: Specifies the runtime interpreter version to ensure backwards compatibility.
 
 ### 2. The # Description Section
 This section defines the operational boundary. It explains what the process does, when it should run, what is explicitly out of scope, and what the expected outcomes are.
 
-Crucially, **the Description is not merely documentation**. During execution, the runtime extracts the entire content of this section and injects it into the LLM prompt context for *every single step*. This ensures that the model maintains a constant understanding of the global constraints, purpose, and boundaries of the work.
+Crucially, **the Description is not merely documentation**. During execution, PDT includes the entire content of this section in the LLM context for *every single step*. This ensures that the model maintains a constant understanding of the global constraints, purpose, and boundaries of the work.
 
 ```markdown
 # Description
@@ -265,7 +263,7 @@ This process prepares a weekly growth experiment review by assessing active A/B 
 ```
 
 ### 3. The # Workflow Section
-The `# Workflow` section contains the actual sequence of execution. The runtime parses this section and splits the workflow at each second-level heading (`##`). Each heading is executed as an isolated, sequential step.
+The `# Workflow` section contains the actual sequence of execution. PDT parses this section and splits the workflow at each second-level heading (`##`). Each heading is executed as an isolated, sequential step.
 
 ```markdown
 # Workflow
@@ -285,9 +283,9 @@ Compile the findings into the standard review format. Use `tool/create_review_re
 
 ### Inline References
 
-To allow the runtime to connect the natural-language instructions to concrete code and data contracts, `PROCESS.md` utilizes inline code formatting to reference external resources. 
+To allow PDT to connect the natural-language instructions to concrete code and data contracts, `PROCESS.md` utilizes inline code formatting to reference external resources.
 
-The runtime parses these references during linting and execution, resolving them against the repository:
+PDT parses these references during linting and execution, resolving them against the repository:
 
 *   `skill/<id>`: Resolves to a reusable capability file (e.g., `skills/experiment-analysis/SKILL.md`).
 *   `tool/<id>`: Resolves to an executable script configuration (e.g., `tools/experiment_lookup/tool.yaml`).
@@ -322,17 +320,17 @@ In this repository model:
 
 ---
 
-## Chapter 4: The Runtime as the Control Layer
+## Chapter 4: How PDT Runs Governed Workflows
 
 The defining characteristic of workflow engineering is that **natural language is not a security boundary**. 
 
 Writing "do not write to the database" or "stop for human approval" in a Markdown document or an LLM prompt is an instruction, not an enforcement mechanism. If the model is directly connected to a database write tool, or if the system lacks a state machine to handle pauses, a model may bypass the text-based boundaries.
 
-To turn a process document into a safe, predictable execution, the system requires a dedicated controller: the **PDT (Process Deploy Tool) Runtime**.
+PDT turns a process document into safe, predictable execution by doing concrete work around the model: it parses the `PROCESS.md` file, runs one step at a time, exposes only the referenced tools, records outputs, preserves evidence, and stops for human approval when the process requires it.
 
 ```
 +-------------------------------------------------------------+
-|                         PDT RUNTIME                         |
+|                    PDT (Process Deploy Tool)                |
 +------------------------------+------------------------------+
                                |
        +-----------------------+-----------------------+
@@ -347,23 +345,23 @@ To turn a process document into a safe, predictable execution, the system requir
 +------------------------------+               +----------------------+
 ```
 
-The runtime acts as the deterministic engine that wraps the model's probabilistic reasoning. It parses the `PROCESS.md` file, orchestrates the state machine, exposes only the explicitly allowed tools, registers human approval inputs, and captures audit logs.
+PDT wraps model reasoning in a deterministic process shape. The model can analyze, classify, draft, or decide within the active step, but PDT controls the step order, available tools, saved state, approval pauses, and audit trail.
 
 ### Deterministic Structure, Bounded Reasoning
 
-PDT does not run a single, open-ended loop where the model decides how to navigate the entire workflow. Instead, the runtime enforces a strict, step-by-step execution pattern:
+PDT does not run a single, open-ended loop where the model decides how to navigate the entire workflow. Instead, PDT follows a strict, step-by-step execution pattern:
 
-1. **Step Isolation:** The runtime loads the process and breaks the workflow into its defined steps. It executes exactly one step at a time. The model is never allowed to look ahead or decide to skip steps.
-2. **Context Synthesis:** For the active step, the runtime assembles a highly structured prompt containing only:
+1. **Step Isolation:** PDT loads the process and breaks the workflow into its defined steps. It executes exactly one step at a time. The model is never allowed to look ahead or decide to skip steps.
+2. **Context Synthesis:** For the active step, PDT assembles a highly structured prompt containing only:
     * The global `# Description` block (the constraints and boundary rules).
     * The specific text of the active step.
     * The inputs and outputs of the preceding steps (the execution state).
     * The content of any referenced `SKILL.md` files.
     * The schemas of the allowed tools.
-3. **Execution Bounding:** The model reasons within the boundaries of that single step. It can invoke the exposed tools, perform analyses, or draft content. Once the step's objectives are met, the model returns control to the runtime.
-4. **State Persistence:** The runtime records the step's output, logs the exact tool calls made, saves any evidence, and updates the run file. It then evaluates the next step's requirements.
+3. **Execution Bounding:** The model reasons within the boundaries of that single step. It can invoke the exposed tools, perform analyses, or draft content. Once the step's objectives are met, control returns to PDT.
+4. **State Persistence:** PDT records the step's output, logs the exact tool calls made, saves any evidence, and updates the run file. It then evaluates the next step's requirements.
 
-If the next step requires human approval, the runtime halts, transitions the run state to `waiting_for_approval`, and persists the execution state to disk. The process cannot proceed until an external human action resumes it.
+If the next step requires human approval, PDT pauses, transitions the run state to `waiting_for_approval`, and persists the execution state to disk. The process cannot proceed until an external human action resumes it.
 
 ### Controlling Cost through Workflow Shape
 
@@ -374,12 +372,12 @@ When an agent is placed in a loop with instructions to "complete the task," it m
 Workflow engineering solves this by making the execution cost a function of the workflow's shape:
 
 *   **Fixed Steps:** Because the workflow is divided into discrete steps, token usage is bounded. The system cannot loop indefinitely.
-*   **Step-Level Cost Observability:** Because the runtime logs token consumption and execution time per step, organizations can pinpoint exactly where spend is concentrated. 
+*   **Step-Level Cost Observability:** Because PDT logs token consumption and execution time per step, organizations can pinpoint exactly where spend is concentrated.
 *   **Targeted Optimization:** Instead of swapping the entire system to a cheaper, less capable model, teams can optimize specific steps. A complex reasoning step (e.g., assessing launch readiness documents against the feature specification) can run on a large, sophisticated model, while a simple extraction step (e.g., loading database values) can run on a small, fast model or be replaced entirely with deterministic code.
 
 ### The Operational Commands: Lint, Parse, and Run
 
-To make development and deployment robust, the runtime provides a command-line interface (CLI) to validate and execute workflows.
+To make development and deployment robust, PDT provides a command-line interface (CLI) to validate and execute workflows.
 
 #### 1. Linting (`pdt lint`)
 Before a process is deployed or merged into the repository, the linter checks the document's structure.
@@ -395,14 +393,14 @@ The linter verifies that:
 *   All inline references (e.g., `tool/experiment_lookup`) resolve to valid files in the repository.
 
 #### 2. Parsing (`pdt parse`)
-The parsing command reads the Markdown file and outputs the structured execution plan. This is useful for debugging how the runtime will split steps and inject context.
+The parsing command reads the Markdown file and outputs the structured execution plan. This is useful for debugging how PDT will split steps and inject context.
 
 ```bash
 pdt parse processes/growth_experiment_review/PROCESS.md
 ```
 
 #### 3. Execution (`pdt run`)
-To run a workflow, the runtime is invoked with the target process file and the initial input payload.
+To run a workflow, PDT is invoked with the target process file and the initial input payload.
 
 ```bash
 pdt run processes/growth_experiment_review/PROCESS.md \
@@ -422,17 +420,17 @@ Outcome: paused waiting for approval.
 To approve, run: pdt run --resume run_98a72f1c
 ```
 
-Inside the run directory, the runtime preserves the complete execution trace:
+Inside the run directory, PDT preserves the complete execution trace:
 
 *   `run.json`: The state machine file tracking inputs, outputs, timestamps, and status.
 *   `evidence/`: A folder containing copies of files, database query results, and tool outputs gathered during the run.
 *   `logs/`: Detailed, step-by-step logs, including the exact prompts sent to the LLM and the raw API responses.
 
-This structure ensures that every action taken by the AI is audit-compliant. If a product release package is flagged as ready for launch, or if a financial variance explanation is routed to the controller, the compliance team can trace the decision back to the exact step, the exact prompt, the tools called, and the raw evidence captured by the runtime.
+This structure ensures that every action taken by the AI is audit-compliant. If a product release package is flagged as ready for launch, or if a financial variance explanation is routed to the controller, the compliance team can trace the decision back to the exact step, the exact prompt, the tools called, and the raw evidence captured by PDT.
 
 ### The Vision: A Vercel for Operational Workflows
 
-The ultimate goal of the Process Deploy Tool (PDT) is to move beyond a local command-line runtime and establish a hosted, cloud-native deployment platform—a **Vercel or Netlify for operational workflows**.
+The ultimate goal of the Process Deploy Tool (PDT) is to move beyond a local command-line tool and establish a hosted, cloud-native deployment platform—a **Vercel or Netlify for operational workflows**.
 
 In this vision, moving a new business process or tool script from a local repository to a production-grade operational service should be as simple as executing:
 
@@ -453,4 +451,4 @@ This architecture transitions the operations repository from a directory of stat
 
 Workflow Engineering represents a fundamental shift in how we design and deploy AI applications. We do not achieve operational reliability by waiting for language models to become perfectly logical, nor do we achieve it through open-ended agents that govern themselves. We achieve it by engineering the environment in which they reason.
 
-By separating general capabilities (skills) from contextual rules (processes), authoring executable procedures in Git-native Markdown (`PROCESS.md`), executing them inside a runtime that enforces boundaries (PDT), and deploying them to a serverless operations platform, organizations can safely scale AI-driven operations.
+By separating general capabilities (skills) from contextual rules (processes), authoring executable procedures in Git-native Markdown (`PROCESS.md`), running them through PDT's step-by-step execution model, and deploying them to a serverless operations platform, organizations can safely scale AI-driven operations.

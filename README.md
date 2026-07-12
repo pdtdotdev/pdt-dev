@@ -1,73 +1,35 @@
-# PDT (Process Deploy Tool)
+# PDT
 
-> **Git-native tooling for governed, AI-assisted operational workflows.**
+> **Git-native execution for governed, AI-assisted operational workflows.**
 
-`pdt` (Process Deploy Tool) is an open-source command-line tool that lets operators, analysts, and engineers turn recurring business processes into structured, version-controlled workflows using Markdown.
+PDT turns Markdown SOPs into executable workflows.
 
-At its core, it sits in the execution layer for AI-assisted operations: once a process is described in a `PROCESS.md` file, `pdt` can validate it, resolve its dependencies, run it step by step, preserve evidence, and pause for human approval when needed.
+Define a process in `PROCESS.md`, commit it to Git, and use PDT to validate, run, pause, resume, and deploy it. PDT executes one step at a time, records evidence, resolves tools and skills, and stops for human approval when required.
 
----
+```bash
+pip install run-pdt
 
-## What it does
-
-- Lets you write operational workflows as structured **Markdown SOPs** (`PROCESS.md` files), then checks and runs them from the command line
-- Introduces **processes**: ordered, versioned business workflows with owners, descriptions, and explicit steps
-- Separates **skills** from **processes**: skills describe reusable capabilities, while processes define the business rules, sequence, constraints, and approval points
-- Resolves inline references to local **tools**, **schemas**, **skills**, and other processes
-- Runs workflows one step at a time, preserving inputs, outputs, tool calls, logs, and evidence for each step
-- Supports human-in-the-loop gates for approvals, exceptions, and business judgment
-- Provides `lint`, `parse`, `run`, and `deploy` commands so workflows can be reviewed, tested, and shipped through Git
-- Exposes a FastAPI server for triggering workflows through webhooks or remote API calls
-
-## The philosophy
-
-Most operational teams do not need another open-ended autonomous agent. They require a reliable framework to transform recurring, high-stakes business processes into structured, version-controlled workflows. 
-
-PDT establishes this via **Workflow Engineering**—pairing deterministic execution structures with bounded model reasoning:
-* **Decoupled Skills & Processes**: Skills describe *how* to perform a reusable task (general/mechanical); processes describe *what* should happen, in what order, and under what constraints (contextual/governing).
-* **Markdown as Code**: `PROCESS.md` files are the "SQL of operations"—readable by non-developer process owners, versioned in Git, and executable by a computer.
-* **Step-by-Step Execution**: Instead of letting an LLM navigate a workflow in an open-ended loop, PDT runs one isolated step at a time and exposes only the context and tools needed for that step.
-* **Human-Centered Exceptions**: When exceptions or gates are hit, PDT pauses, saves state, and alerts humans to verify or approve the work.
-
-## What it connects to
-
-PDT works with local scripts, APIs, data contracts, and LLM-assisted capabilities through a workspace layout:
-
-- **Tools** wrap executable code such as Python or Node.js scripts.
-- **Schemas** define expected structured outputs and validation contracts.
-- **Skills** provide reusable guidance for LLM-assisted work.
-- **Processes** compose those assets into governed business workflows.
-
-A simple mental model: *PDT is like dbt, but for operational workflows instead of warehouse transformations. It gives structure, conventions, validation, lineage, and deployable execution to work that used to live in ad hoc prompts, SOP docs, spreadsheets, and automation builders.*
-
----
-
-## Workspace Layout
-
-A conforming PDT workspace is organized as follows:
-
-```text
-/workspace
-├── pdt.yaml                          # Workspace configuration
-├── processes/                        # Executable workflows
-│   └── growth_experiment_review/
-│       └── PROCESS.md
-├── skills/                           # Capability guides
-│   └── experiment-analysis/
-│       └── SKILL.md
-├── tools/                            # Code execution units
-│   └── experiment_lookup/
-│       ├── tool.yaml
-│       └── main.py
-└── schemas/                          # Data validation contracts
-    └── experiment-summary.schema.json
+pdt init
+pdt lint processes/example/PROCESS.md
+pdt run processes/example/PROCESS.md
 ```
 
----
+## Why PDT?
 
-## Anatomy of `PROCESS.md`
+Operational workflows often live across SOP documents, prompts, scripts, spreadsheets, and automation tools. That makes important business logic difficult to review, test, govern, and reuse.
 
-An executable SOP contains three main components:
+PDT brings those workflows into a common execution model:
+
+* Processes are readable Markdown and versioned in Git.
+* Deterministic tools handle predictable work.
+* Skills provide reusable guidance for AI-assisted work.
+* Each step receives bounded context and permissions.
+* Runs preserve inputs, outputs, logs, tool calls, and evidence.
+* Approval gates keep humans responsible for exceptions and judgment.
+
+Think of PDT as **dbt for operational workflows**: conventions, validation, lineage, and deployable execution for work outside the data warehouse.
+
+## A `PROCESS.md` file
 
 ```markdown
 ---
@@ -77,78 +39,135 @@ version: 0.1.0
 owner: growth-team
 status: active
 ---
+
 # Description
-A workflow to review growth experiments, aggregate conversions, and perform high-level evaluation before approval.
+
+Review active growth experiments and prepare an assessment for approval.
 
 # Workflow
-## Step 1: Load active experiments
-Lookup all active experiments using the tool `tool/experiment_lookup`.
 
-## Step 2: Assess statistical performance
-Evaluate the total conversion metrics using `skill/experiment-analysis` and construct a structured JSON summary matching `schema/experiment-summary`.
+## Step 1: Load active experiments
+
+Load active experiments using `tool/experiment_lookup`.
+
+## Step 2: Assess performance
+
+Evaluate conversion metrics using `skill/experiment-analysis`.
+
+Return a result matching `schema/experiment-summary`.
 
 ## Step 3: Approve experiment
-Review the assessment and request final business approval before closing.
+
+Request final business approval before closing the experiment.
 ```
 
----
+PDT parses the workflow, resolves its references, and executes each step in order. When it reaches an approval or exception gate, it saves the current state and waits for a human response.
 
-## CLI Commands & Usage
+## Core concepts
 
-Install the PDT package:
-```bash
-pip install run-pdt
+### Processes
+
+Processes define what must happen: the sequence, business rules, constraints, owners, and approval points.
+
+### Skills
+
+Skills describe how to perform reusable AI-assisted work. They can be shared across many processes.
+
+### Tools
+
+Tools wrap executable code, APIs, or scripts used for deterministic actions.
+
+### Schemas
+
+Schemas define structured outputs and validation contracts.
+
+This separation keeps reusable capabilities independent from the business processes that govern when and how they are used.
+
+## Workspace layout
+
+```text
+workspace/
+├── pdt.yaml
+├── processes/
+│   └── growth_experiment_review/
+│       └── PROCESS.md
+├── skills/
+│   └── experiment-analysis/
+│       └── SKILL.md
+├── tools/
+│   └── experiment_lookup/
+│       ├── tool.yaml
+│       └── main.py
+└── schemas/
+    └── experiment-summary.schema.json
 ```
 
-### 1. `pdt init`
-Initialize a new standard workspace directory layout with default configuration:
+## CLI
+
+Initialize a workspace:
+
 ```bash
 pdt init [workspace_path]
 ```
 
-### 2. `pdt lint`
-Validate workspace config, verify step index ordering, and resolve all inline reference links to confirm they point to valid skills, tools, processes, and schemas:
+Validate a process and its references:
+
 ```bash
 pdt lint processes/growth_experiment_review/PROCESS.md
 ```
 
-### 3. `pdt parse`
-Parse a `PROCESS.md` file and output a clean Abstract Syntax Tree (AST) in JSON format:
+Inspect the parsed process as JSON:
+
 ```bash
 pdt parse processes/growth_experiment_review/PROCESS.md
 ```
 
-### 4. `pdt run`
-Execute the workflow steps sequentially. PDT automatically runs local tools, saves evidence, compiles bounded prompts, and pauses when a human gate (e.g. "approval") is encountered.
+Run a complete process:
 
-* **Execute workflow fully:**
-  ```bash
-  pdt run processes/growth_experiment_review/PROCESS.md --input metrics.json
-  ```
-* **Run a single step only:**
-  ```bash
-  pdt run processes/growth_experiment_review/PROCESS.md --step 2
-  ```
-* **Resume a paused workflow:**
-  ```bash
-  pdt run --resume run_98a72f1c
-  ```
+```bash
+pdt run processes/growth_experiment_review/PROCESS.md --input metrics.json
+```
 
-### 5. `pdt deploy`
-Package the workspace and generate container/deployment configurations:
+Run one step:
+
+```bash
+pdt run processes/growth_experiment_review/PROCESS.md --step 2
+```
+
+Resume a paused run:
+
+```bash
+pdt run --resume run_98a72f1c
+```
+
+Generate deployment configuration:
+
 ```bash
 pdt deploy --target docker --dry-run
 ```
 
----
+## API server
 
-## Webhook Server Daemon
+Run the built-in FastAPI service:
 
-Expose the workspace as an API service using the built-in FastAPI daemon:
 ```bash
 uvicorn pdt_cli.server:app --port 8080
 ```
-This exposes REST API endpoints to trigger and manage workflows remotely:
-* `POST /run/{process_id}`: Trigger step execution with input payload.
-* `GET /status/{run_id}`: Check status and inspect run evidence.
-* `POST /approve/{run_id}`: Submit approval inputs to resume paused states.
+
+Available endpoints include:
+
+```text
+POST /run/{process_id}       Start a process
+GET  /status/{run_id}        Inspect status and evidence
+POST /approve/{run_id}       Approve and resume a paused run
+```
+
+## Design principles
+
+PDT is built around a discipline called **Workflow Engineering**:
+
+1. Business processes should be readable by the people who own them.
+2. Operational logic should be versioned, reviewable, and testable.
+3. AI reasoning should be bounded by explicit steps, context, and tools.
+4. Important decisions and exceptions should remain visible to humans.
+5. Every run should leave enough evidence to understand what happened.
